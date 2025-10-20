@@ -12,9 +12,9 @@
 
 | Número | Nome             | GitHub |
 |--------|------------------|--------|
-| 25447  | Ricardo Marques  | [@ipca-pedro](https://github.com/ipca-pedro) |
+| 25447  | Ricardo Marques  | - |
 | 25446  | Vitor Leite      | - |
-| 25453  | Pedro Vilas Boas | - |
+| 25453  | Pedro Vilas Boas | [@ipca-pedro](https://github.com/ipca-pedro) |
 | 25275  | Filipe Ferreira  | - |
 | 25457  | Danilo Castro    | - |
 
@@ -40,16 +40,16 @@ Desenvolver um sistema de agendamento automático que:
 ```
 IA25_P01_G04/
 ├── README.md                      # Este ficheiro
-├── README_DETALHADO.md           # Documentação técnica completa
-├── requirements.txt              # Dependências Python
-├── main.py                       # Módulo principal com menu de execução
-├── dataset.py                    # Configuração de dados e restrições
-├── csp_formulation.py           # Formulação CSP (variáveis e domínios)
-├── csp_constraints.py           # Implementação das restrições hard
-├── csp_solver.py                # Algoritmos de resolução CSP
-├── csp_evaluation.py            # Avaliação e apresentação de resultados
-├── timetabling_csp.py           # [LEGACY] Código monolítico original
-└── mapa_aulas_completo.ipynb    # Notebook Jupyter estruturado
+├── README_DETALHADO.md            # Documentação técnica completa
+├── requirements.txt               # Dependências Python
+├── main.py                        # Módulo principal com menu de execução
+├── dataset.py                     # Configuração de dados e restrições
+├── csp_formulation.py             # Formulação CSP (variáveis e domínios)
+├── csp_constraints.py             # Implementação das restrições hard
+├── csp_solver.py                  # Algoritmos de resolução CSP
+├── csp_evaluation.py              # Avaliação e apresentação de resultados
+├── timetabling_csp.py             # [LEGACY] Código monolítico original
+└── mapa_aulas_completo.ipynb      # Notebook Jupyter estruturado
 ```
 
 ---
@@ -214,49 +214,3 @@ Turma t01:
 
 ---
 
-## Resolução de Problemas
-
-### Erro: "ModuleNotFoundError: No module named 'constraint'"
-
-**Causa:** Biblioteca CSP não instalada  
-**Solução:**
-```bash
-pip install python-constraint
-```
-
-### Execução Muito Lenta (>5 minutos)
-
-**Causa:** Restrições muito restritivas  
-**Soluções:**
-1. Usar versão modular: `python main.py`
-2. Reduzir restrições online no `dataset.py`
-3. Aumentar disponibilidade dos professores
-
-### Nenhuma Solução Encontrada
-
-**Diagnóstico:**
-```bash
-python csp_formulation.py  # Verificar domínios
-```
-
-**Possíveis causas:**
-- Professores com disponibilidade insuficiente
-- Conflitos entre restrições de salas
-- Restrições de coordenação muito rígidas
-
-**Soluções:**
-- Editar disponibilidades em `dataset.py`
-- Verificar mapeamento professor-UC
-- Relaxar restrições de aulas online
-
-## Documentação Adicional
-
-- **[README_DETALHADO.md](README_DETALHADO.md)** - Documentação técnica completa
-- **[mapa_aulas_completo.ipynb](mapa_aulas_completo.ipynb)** - Análise interativa
-- **[Repositório GitHub](https://github.com/ipca-pedro/IA25_P01_G04)** - Código fonte
-
----
-
-**Desenvolvido por:** Grupo 04 - IPCA 2025/2026  
-**Licença:** MIT  
-**Última atualização:** Janeiro 2025
