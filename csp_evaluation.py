@@ -224,25 +224,20 @@ def _are_consecutive(slots):
 
 def display_schedule(solution, score, solve_time):
     """
-    Exibe o horário final de forma formatada e organizada.
+    Exibe o horário final de forma limpa e focada.
     
-    Apresenta a solução CSP de forma legível, organizada por turma
-    e ordenada cronologicamente. Inclui métricas de qualidade e
-    performance para avaliação do resultado.
+    Apresenta apenas o sumário de sucesso e o horário organizado por turma,
+    sem cabeçalhos verbosos ou análises detalhadas.
     
     Args:
         solution (dict): Solução CSP {(course, lesson): (slot, room)}
         score (int): Pontuação de qualidade calculada
         solve_time (float): Tempo de execução em segundos
     """
-    # Cabeçalho com métricas principais
-    print(f"\n{'='*60}")
-    print(f"SOLUÇÃO ENCONTRADA (Pontuação: {score})")
-    print(f"{'='*60}")
-    print(f"PERFORMANCE: {solve_time:.3f}s | QUALIDADE: {score} pontos")
-    print(f"{'='*60}")
+    # Sumário de sucesso numa linha
+    print(f"[OK] Solução encontrada (Pontuação: {score}) em {solve_time:.3f}s")
     
-    # Exibe horário organizado por turma
+    # Horário organizado por turma
     for class_name in classes:
         print(f"\nTurma {class_name}:")
         
@@ -256,12 +251,3 @@ def display_schedule(solution, score, solve_time):
         for day, slot_in_day, course, lesson, room in sorted(schedule):
             room_type = "[Online]" if room == 'Online' else f"[{room}]"
             print(f"  Dia {day}, Slot {slot_in_day}: {course}_L{lesson} {room_type}")
-    
-    # Análise final da solução com classificação de qualidade
-    print(f"\nANÁLISE DA SOLUÇÃO:")
-    print(f"- Pontuação final: {score} pontos")
-    print(f"- Tempo de execução: {solve_time:.3f}s")
-    # Classificação qualitativa baseada na pontuação
-    quality = 'Excelente' if score > 100 else 'Boa' if score > 50 else 'Aceitável'
-    print(f"- Qualidade: {quality}")
-    print("\n[OK] Execução concluída com sucesso!")

@@ -189,6 +189,6 @@ def create_csp_problem():
         'online_vars': online_vars
     }
     
-    print(f"Variáveis adicionadas: {len(constrained_vars)} restritivas, {len(regular_vars)} regulares")
+    # Variáveis adicionadas silenciosamente
     
     return problem, variables_info

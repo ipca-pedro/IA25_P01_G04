@@ -192,6 +192,4 @@ def apply_hard_constraints(problem, variables_info):
     if online_vars:
         problem.addConstraint(max_online_per_day, online_vars)
     
-    # Relatório de restrições aplicadas para debugging
-    pairwise_count = len(physical_vars) * (len(physical_vars) - 1) // 2
-    print(f"Restrições aplicadas: {pairwise_count} pairwise + outras")
+    # Restrições aplicadas silenciosamente
