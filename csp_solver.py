@@ -5,7 +5,7 @@ Este módulo implementa a estratégia de resolução hierárquica que combina
 dois algoritmos complementares para maximizar a eficiência:
 
 1. MinConflictsSolver (Primeira tentativa):
-   - Algoritmo de busca local muito rápido
+   - Algoritmo de busca local
    - Ideal para encontrar soluções rapidamente
    - Pode não encontrar solução se ficar preso em mínimo local
 
@@ -13,11 +13,6 @@ dois algoritmos complementares para maximizar a eficiência:
    - Busca sistemática completa
    - Mais lento mas garante encontrar solução se existir
    - Usado apenas se MinConflicts falhar
-
-ESTRATÉGIA: "Rápido primeiro, completo se necessário"
-RESULTADO: Combina velocidade com garantia de completude
-
-Autor: Grupo 04 - IA 2025/2026
 """
 
 import time
@@ -29,11 +24,11 @@ def find_solution(problem):
     """
     Executa a estratégia de resolução hierárquica otimizada.
     
-    Implementa uma abordagem de dois níveis que maximiza a eficiência:
+    Implementa uma abordagem de dois níveis:
     1. Tenta MinConflictsSolver primeiro (rápido, busca local)
     2. Se falhar, usa BacktrackingSolver (lento, busca completa)
     
-    Esta estratégia aproveita o melhor de ambos os mundos:
+    Esta estratégia aproveita o melhor de ambos:
     - Velocidade do MinConflicts para casos fáceis
     - Completude do Backtracking para casos difíceis
     
@@ -49,15 +44,11 @@ def find_solution(problem):
     
     try:
         # ESTRATÉGIA 1: MinConflictsSolver (Algoritmo de busca local)
-        # VANTAGENS: Muito rápido, ideal para problemas grandes
-        # DESVANTAGENS: Pode ficar preso em mínimos locais
         problem.setSolver(MinConflictsSolver())
         solution = problem.getSolution()
         
         if not solution:
             # ESTRATÉGIA 2: BacktrackingSolver (Busca sistemática completa)
-            # VANTAGENS: Garante encontrar solução se existir
-            # DESVANTAGENS: Mais lento, especialmente para problemas grandes
             problem.setSolver(BacktrackingSolver())
             solution = problem.getSolution()
         

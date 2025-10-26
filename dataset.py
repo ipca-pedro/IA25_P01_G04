@@ -1,15 +1,6 @@
 """
 Dataset para o Sistema de Agendamento de Aulas CSP
 
-
-O dataset representa um cenário real de uma instituição de ensino superior com:
-- 3 turmas (t01, t02, t03)
-- 4 professores (jo, mike, rob, sue)
-- 15 unidades curriculares (UC11-UC35)
-- 5 salas (4 físicas + 1 online)
-- 20 slots temporais (5 dias × 4 blocos)
-
-Autor: Grupo 04 - IA 2025/2026
 """
 
 # Mapeamento de turmas para unidades curriculares
@@ -48,7 +39,7 @@ rr = {
 }
 
 # Aulas online
-# Indica qual lição (1 ou 2) de cada UC é ministrada online
+# Indica qual lição (1 ou 2) de cada UC é dada online
 # Apenas UC21 e UC31 têm a segunda lição online
 oc = {
     'UC21': 2,

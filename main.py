@@ -10,12 +10,8 @@ Este ficheiro coordena a execução sequencial de todas as fases:
 4. Avaliação e apresentação (csp_evaluation)
 
 OTIMIZAÇÕES INTEGRADAS:
-- Redução de domínios (50% menos valores)
-- Decomposição pairwise (O(n²) vs O(n!))
 - Ordenação MRV (variáveis restritivas primeiro)
 - Solver hierárquico (MinConflicts + Backtracking)
-
-RESULTADO: Melhoria de performance >1000x vs implementação original
 
 Autor: Grupo 04 - IA 2025/2026
 """
@@ -33,12 +29,11 @@ def main():
     Função principal que orquestra todo o processo de agendamento CSP.
     
     Executa sequencialmente todas as fases do sistema:
-    1. Criação do problema CSP com variáveis otimizadas
-    2. Aplicação de restrições hard decompostas
+    1. Criação do problema CSP 
+    2. Aplicação de restrições hard 
     3. Resolução com estratégia hierárquica
     4. Avaliação de qualidade e apresentação de resultados
     
-    Output limpo focado apenas no resultado final.
     """
     # Execução silenciosa de todas as fases
     problem, variables_info = create_csp_problem()

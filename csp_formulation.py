@@ -6,11 +6,6 @@ Formulação do Problema CSP - Criação de variáveis e domínios otimizados
 2. Ordenação de variáveis por MRV (Most Restrictive Variable)
 3. Preferências de salas por turma para reduzir combinações
 
-As otimizações transformam um problema com ~80^30 combinações teóricas
-em um problema com ~40^30 combinações práticas, melhorando drasticamente
-a performance do solver.
-
-Autor: Grupo 04 - IA 2025/2026
 """
 
 from constraint import Problem
@@ -63,13 +58,7 @@ def get_day(slot):
 
 
 def get_domain(course, lesson_idx):
-    """
-    FUNÇÃO CRÍTICA: Calcula domínio otimizado com redução estratégica.
-    
-    Esta função implementa a otimização mais importante do sistema,
-    reduzindo o espaço de busca de ~80 valores para ~40 valores por variável
-    através da aplicação de restrições unárias durante a construção do domínio.
-    
+    """  
     Otimizações aplicadas:
     1. Filtragem por disponibilidade de professores
     2. Restrições de salas específicas (laboratórios)
@@ -100,7 +89,7 @@ def get_domain(course, lesson_idx):
             elif course in rr:
                 domain.append((slot, rr[course]))
             else:
-                # OTIMIZAÇÃO CRÍTICA: Heurística de preferências de salas por turma
+                # Heurística de preferências de salas por turma
                 # Reduz domínio de 4 salas para 2 salas por turma (redução de 50%)
                 # Baseado na observação que turmas tendem a usar salas próximas
                 if class_name == 't01':
@@ -136,9 +125,9 @@ def create_csp_problem():
     """
     problem = Problem()
     
-    # OTIMIZAÇÃO: Ordenação estratégica de variáveis (simulação da heurística MRV)
+    # Ordenação estratégica de variáveis (simulação da heurística MRV)
     # MRV (Minimum Remaining Values) = escolher variáveis com menor domínio primeiro
-    # BENEFÍCIO: Falha rapidamente em atribuições impossíveis, reduzindo backtracking
+    # Falha rapidamente em atribuições impossíveis, reduzindo backtracking
     constrained_vars = []  # Variáveis com domínios pequenos (labs, online)
     regular_vars = []      # Variáveis com domínios normais
     
@@ -154,7 +143,7 @@ def create_csp_problem():
             else:
                 regular_vars.append((var, domain))
     
-    # ESTRATÉGIA MRV: Adiciona variáveis restritivas primeiro
+    # Adiciona variáveis restritivas primeiro
     # Isto força o solver a resolver as partes mais difíceis primeiro
     all_variables = []
     for var, domain in constrained_vars + regular_vars:

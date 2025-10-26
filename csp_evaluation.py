@@ -11,9 +11,6 @@ SISTEMA DE PONTUAÇÃO (4 critérios):
 3. Minimização de salas: Menos salas por turma (-2 pts/sala)
 4. Consecutividade: Aulas consecutivas no mesmo dia (+5 pts/dia)
 
-OBJETIVO: Maximizar pontuação total (solução mais equilibrada e prática)
-
-Autor: Grupo 04 - IA 2025/2026
 """
 
 from csp_formulation import get_day
@@ -22,11 +19,11 @@ from dataset import courses, classes, cc
 
 def evaluate_solution(solution):
     """
-    Sistema de avaliação principal baseado em restrições soft (preferências).
+    Sistema de avaliação principal baseado em restrições soft
     
     Avalia a qualidade prática de uma solução CSP válida através de
-    4 critérios pedagógicos e organizacionais. Todas as hard constraints
-    já estão satisfeitas; este sistema mede quão boa é a solução na prática.
+    4 critérios. Todas as hard constraints já estão satisfeitas
+    este sistema mede quão boa é a solução na prática
     
     Args:
         solution (dict): Solução CSP {(course, lesson): (slot, room)}
@@ -47,7 +44,7 @@ def _evaluate_course_distribution(solution):
     """
     CRITÉRIO 1: Distribuição temporal das lições por UC.
     
-    OBJETIVO PEDAGÓGICO: Lições da mesma UC em dias diferentes
+    OBJETIVO: Lições da mesma UC em dias diferentes
     - Melhora assimilação do conteúdo (espaçamento temporal)
     - Evita sobrecarga de uma disciplina num só dia
     - Permite revisão entre lições
@@ -76,12 +73,7 @@ def _evaluate_class_distribution(solution):
     """
     CRITÉRIO 2: Distribuição semanal ideal por turma.
     
-    OBJETIVO ORGANIZACIONAL: Turmas com aulas em exatamente 4 dias
-    - Evita dias vazios (3 dias) ou sobrecarga (5 dias)
-    - Permite 1 dia livre para estudo/atividades extracurriculares
-    - Distribuição equilibrada da carga horária semanal
-    - Facilita gestão de tempo dos estudantes
-    
+    OBJETIVO: Turmas com aulas em exatamente 4 dias
     PONTUAÇÃO: +20 pontos por turma com aulas em exatamente 4 dias
     MÁXIMO POSSÍVEL: 3 turmas × 20 pts = 60 pontos
     
@@ -107,12 +99,7 @@ def _evaluate_room_usage(solution):
     """
     CRITÉRIO 3: Minimização do uso de salas (penalização).
     
-    OBJETIVO LOGÍSTICO: Concentrar turmas em menos salas
-    - Facilita movimentação de estudantes entre aulas
-    - Reduz necessidade de equipamentos múltiplos
-    - Melhora gestão de recursos (limpeza, manutenção)
-    - Cria "zonas" de turmas para melhor organização
-    
+    OBJETIVO: Concentrar turmas em menos salas    
     PONTUAÇÃO: -2 pontos por cada sala diferente usada por turma
     MÍNIMO POSSÍVEL: 3 turmas × 2 salas × (-2) = -12 pontos (ideal)
     MÁXIMO NEGATIVO: 3 turmas × 5 salas × (-2) = -30 pontos (pior caso)
@@ -138,12 +125,7 @@ def _evaluate_consecutive_lessons(solution):
     """
     CRITÉRIO 4: Consecutividade de aulas (compactação).
     
-    OBJETIVO PRÁTICO: Aulas consecutivas no mesmo dia
-    - Evita "janelas" vazias no horário
-    - Reduz tempo de permanência na instituição
-    - Melhora aproveitamento do tempo
-    - Facilita deslocamentos e gestão logística
-    
+    OBJETIVO: Aulas consecutivas no mesmo dia
     PONTUAÇÃO: +5 pontos por cada dia com aulas consecutivas
     MÁXIMO POSSÍVEL: Variável (depende da distribuição)
     
