@@ -5,7 +5,6 @@ Restrições Hard do CSP - Decomposição otimizada em restrições binárias
 
 from itertools import combinations
 from csp_formulation import get_day
-from dataset import classes, cc
 
 
 def no_room_conflict(val1, val2):
@@ -106,7 +105,7 @@ def max_online_per_day(*assignments):
     return True
 
 
-def apply_hard_constraints(problem, variables_info):
+def apply_hard_constraints(problem, variables_info, dataset):
     """
     Aplica todas as restrições hard obrigatórias ao problema CSP.
     
@@ -135,13 +134,23 @@ def apply_hard_constraints(problem, variables_info):
             problem.addConstraint(different_slots, (var1, var2))
     
     # RESTRIÇÃO 4: Máximo 3 lições por dia por turma
-    for class_name in classes:
+    for class_name in dataset['classes']:
         class_variables = class_vars[class_name]
         problem.addConstraint(max_lessons_per_day, class_variables)
     
     # RESTRIÇÃO 5: Coordenação de aulas online
     if len(online_vars) >= 2:
-        problem.addConstraint(online_same_day, [('UC21', 2), ('UC31', 2)])
+        # Encontra as duas variáveis online específicas
+        uc21_var = None
+        uc31_var = None
+        for var in online_vars:
+            if var[0] == 'UC21' and var[1] == 2:
+                uc21_var = var
+            elif var[0] == 'UC31' and var[1] == 2:
+                uc31_var = var
+        
+        if uc21_var and uc31_var:
+            problem.addConstraint(online_same_day, [uc21_var, uc31_var])
     
     # RESTRIÇÃO 6: Limite de aulas online por dia
     if online_vars:

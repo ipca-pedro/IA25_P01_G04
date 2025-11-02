@@ -14,10 +14,9 @@ SISTEMA DE PONTUAÇÃO (4 critérios):
 """
 
 from csp_formulation import get_day
-from dataset import courses, classes, cc
 
 
-def evaluate_solution(solution):
+def evaluate_solution(solution, dataset):
     """
     Sistema de avaliação principal baseado em restrições soft
     
@@ -33,14 +32,14 @@ def evaluate_solution(solution):
              Faixa típica: 50-150 pontos
     """
     score = 0
-    score += _evaluate_course_distribution(solution)
-    score += _evaluate_class_distribution(solution)
-    score += _evaluate_room_usage(solution)
-    score += _evaluate_consecutive_lessons(solution)
+    score += _evaluate_course_distribution(solution, dataset)
+    score += _evaluate_class_distribution(solution, dataset)
+    score += _evaluate_room_usage(solution, dataset)
+    score += _evaluate_consecutive_lessons(solution, dataset)
     return score
 
 
-def _evaluate_course_distribution(solution):
+def _evaluate_course_distribution(solution, dataset):
     """
     CRITÉRIO 1: Distribuição temporal das lições por UC.
     
@@ -60,7 +59,7 @@ def _evaluate_course_distribution(solution):
     """
     score = 0
     # Verifica cada UC individualmente
-    for course in courses:
+    for course in dataset['courses']:
         lesson1_slot = solution[(course, 1)][0]  # Slot da lição 1
         lesson2_slot = solution[(course, 2)][0]  # Slot da lição 2
         # Premia se as lições estão em dias diferentes
@@ -69,7 +68,7 @@ def _evaluate_course_distribution(solution):
     return score
 
 
-def _evaluate_class_distribution(solution):
+def _evaluate_class_distribution(solution, dataset):
     """
     CRITÉRIO 2: Distribuição semanal ideal por turma.
     
@@ -85,17 +84,17 @@ def _evaluate_class_distribution(solution):
     """
     score = 0
     # Verifica cada turma individualmente
-    for class_name in classes:
+    for class_name in dataset['classes']:
         # Calcula conjunto de dias utilizados pela turma
         days_used = {get_day(solution[(course, lesson)][0])
-                    for course in cc[class_name] for lesson in [1, 2]}
+                    for course in dataset['cc'][class_name] for lesson in [1, 2]}
         # Premia se a turma usa exatamente 4 dias (ideal)
         if len(days_used) == 4:
             score += 20  # +20 pontos por turma bem distribuída
     return score
 
 
-def _evaluate_room_usage(solution):
+def _evaluate_room_usage(solution, dataset):
     """
     CRITÉRIO 3: Minimização do uso de salas (penalização).
     
@@ -112,16 +111,16 @@ def _evaluate_room_usage(solution):
     """
     score = 0
     # Penaliza cada turma pelo número de salas utilizadas
-    for class_name in classes:
+    for class_name in dataset['classes']:
         # Calcula conjunto de salas utilizadas pela turma
         rooms_used = {solution[(course, lesson)][1]
-                     for course in cc[class_name] for lesson in [1, 2]}
+                     for course in dataset['cc'][class_name] for lesson in [1, 2]}
         # Penalização: -2 pontos por sala utilizada
         score -= len(rooms_used) * 2  # Incentiva concentração em poucas salas
     return score
 
 
-def _evaluate_consecutive_lessons(solution):
+def _evaluate_consecutive_lessons(solution, dataset):
     """
     CRITÉRIO 4: Consecutividade de aulas (compactação).
     
@@ -135,11 +134,11 @@ def _evaluate_consecutive_lessons(solution):
     Returns:
         int: Pontuação parcial (0+)
     """
-    return sum(_check_class_consecutiveness(solution, class_name)
-              for class_name in classes)
+    return sum(_check_class_consecutiveness(solution, class_name, dataset)
+              for class_name in dataset['classes'])
 
 
-def _check_class_consecutiveness(solution, class_name):
+def _check_class_consecutiveness(solution, class_name, dataset):
     """
     Verifica a consecutividade de aulas para uma turma específica.
     
@@ -153,13 +152,13 @@ def _check_class_consecutiveness(solution, class_name):
     Returns:
         int: Pontuação parcial para esta turma
     """
-    slots_by_day = _group_slots_by_day(solution, class_name)
+    slots_by_day = _group_slots_by_day(solution, class_name, dataset)
     # Premia cada dia com aulas consecutivas
     return sum(5 for slots in slots_by_day.values()
               if len(slots) > 1 and _are_consecutive(sorted(slots)))
 
 
-def _group_slots_by_day(solution, class_name):
+def _group_slots_by_day(solution, class_name, dataset):
     """
     Agrupa os slots de uma turma por dia da semana.
     
@@ -175,7 +174,7 @@ def _group_slots_by_day(solution, class_name):
     """
     slots_by_day = {}  # Dicionário para agrupar por dia
     # Itera sobre todas as lições da turma
-    for course in cc[class_name]:
+    for course in dataset['cc'][class_name]:
         for lesson in [1, 2]:
             slot = solution[(course, lesson)][0]  # Obtém slot da lição
             day = get_day(slot)  # Converte slot para dia
@@ -204,7 +203,7 @@ def _are_consecutive(slots):
     return True  # Todos os slots são consecutivos
 
 
-def display_schedule(solution, score, solve_time):
+def display_schedule(solution, score, solve_time, dataset):
     """
     Exibe o horário final de forma limpa e focada.
     
@@ -220,14 +219,14 @@ def display_schedule(solution, score, solve_time):
     print(f"[OK] Solução encontrada (Pontuação: {score}) em {solve_time:.3f}s")
     
     # Horário organizado por turma
-    for class_name in classes:
+    for class_name in dataset['classes']:
         print(f"\nTurma {class_name}:")
         
         # Cria lista de lições com informação completa para ordenação
         schedule = [(get_day(solution[(course, lesson)][0]),  # Dia da semana
                     ((solution[(course, lesson)][0] - 1) % 4) + 1,  # Slot no dia
                     course, lesson, solution[(course, lesson)][1])  # UC, lição, sala
-                   for course in cc[class_name] for lesson in [1, 2]]
+                   for course in dataset['cc'][class_name] for lesson in [1, 2]]
         
         # Ordena cronologicamente e exibe
         for day, slot_in_day, course, lesson, room in sorted(schedule):

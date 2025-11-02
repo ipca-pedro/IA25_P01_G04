@@ -9,36 +9,37 @@ Formulação do Problema CSP - Criação de variáveis e domínios otimizados
 """
 
 from constraint import Problem
-from dataset import cc, dsd, tr, rr, oc, rooms, teachers, classes, courses
 
 
-def get_teacher(course):
+def get_teacher(course, dataset):
     """
     Retorna o professor responsável por uma unidade curricular.
     
     Args:
         course (str): Código da unidade curricular (ex: 'UC11', 'UC22')
+        dataset (dict): Dataset carregado
         
     Returns:
-        str: Nome do professor ('jo', 'mike', 'rob', 'sue') ou None se não encontrado
+        str: Nome do professor ou None se não encontrado
     """
-    for teacher, teacher_courses in dsd.items():
+    for teacher, teacher_courses in dataset['dsd'].items():
         if course in teacher_courses:
             return teacher
     return None
 
 
-def get_class(course):
+def get_class(course, dataset):
     """
     Retorna a turma à qual uma unidade curricular pertence.
     
     Args:
         course (str): Código da unidade curricular (ex: 'UC11', 'UC22')
+        dataset (dict): Dataset carregado
         
     Returns:
-        str: Código da turma ('t01', 't02', 't03') ou None se não encontrado
+        str: Código da turma ou None se não encontrado
     """
-    for class_name, class_courses in cc.items():
+    for class_name, class_courses in dataset['cc'].items():
         if course in class_courses:
             return class_name
     return None
@@ -57,7 +58,7 @@ def get_day(slot):
     return (slot - 1) // 4 + 1
 
 
-def get_domain(course, lesson_idx):
+def get_domain(course, lesson_idx, dataset):
     """  
     Otimizações aplicadas:
     1. Filtragem por disponibilidade de professores
@@ -73,9 +74,9 @@ def get_domain(course, lesson_idx):
         list: Lista de tuplos (slot, sala) representando o domínio otimizado
     """
     # Obtém informações básicas da UC
-    teacher = get_teacher(course)
-    unavailable_slots = tr.get(teacher, [])  # Slots indisponíveis do professor
-    class_name = get_class(course)  # Turma à qual a UC pertence
+    teacher = get_teacher(course, dataset)
+    unavailable_slots = dataset['tr'].get(teacher, [])  # Slots indisponíveis do professor
+    class_name = get_class(course, dataset)  # Turma à qual a UC pertence
     
     domain = []
     # Itera sobre todos os 20 slots temporais (5 dias × 4 blocos)
@@ -83,29 +84,21 @@ def get_domain(course, lesson_idx):
         # Filtra slots indisponíveis do professor (restrição unária)
         if slot not in unavailable_slots:
             # Verifica se esta lição específica é online (restrição unária)
-            if course in oc and oc[course] == lesson_idx:
+            if course in dataset['oc'] and dataset['oc'][course] == lesson_idx:
                 domain.append((slot, 'Online'))
             # Verifica se a UC requer sala específica (restrição unária)
-            elif course in rr:
-                domain.append((slot, rr[course]))
+            elif course in dataset['rr']:
+                domain.append((slot, dataset['rr'][course]))
             else:
-                # Heurística de preferências de salas por turma
-                # Reduz domínio de 4 salas para 2 salas por turma (redução de 50%)
-                # Baseado na observação que turmas tendem a usar salas próximas
-                if class_name == 't01':
-                    preferred_rooms = ['RoomA', 'RoomB']  # Turma 1: salas A e B
-                elif class_name == 't02':
-                    preferred_rooms = ['RoomB', 'RoomC']  # Turma 2: salas B e C
-                else:  # t03
-                    preferred_rooms = ['RoomA', 'RoomC']  # Turma 3: salas A e C
-                
-                # Adiciona apenas salas preferenciais (não todas as 4 salas)
-                for room in preferred_rooms:
+                # Usa todas as salas disponíveis (exceto Online e salas especiais)
+                available_rooms = [room for room in dataset['rooms'] 
+                                 if room not in ['Online', 'Lab01']]
+                for room in available_rooms:
                     domain.append((slot, room))
     return domain
 
 
-def create_csp_problem():
+def create_csp_problem(dataset):
     """
     Cria o problema CSP com otimizações de ordenação de variáveis.
     
@@ -131,14 +124,14 @@ def create_csp_problem():
     constrained_vars = []  # Variáveis com domínios pequenos (labs, online)
     regular_vars = []      # Variáveis com domínios normais
     
-    for course in courses:
+    for course in dataset['courses']:
         for lesson in [1, 2]:
             var = (course, lesson)
-            domain = get_domain(course, lesson)
+            domain = get_domain(course, lesson, dataset)
             
             # CLASSIFICAÇÃO: Separa variáveis por nível de restrição
             # Variáveis restritivas: labs específicos (UC14→Lab01) e aulas online
-            if course in rr or (course in oc and oc[course] == lesson):
+            if course in dataset['rr'] or (course in dataset['oc'] and dataset['oc'][course] == lesson):
                 constrained_vars.append((var, domain))
             else:
                 regular_vars.append((var, domain))
@@ -154,21 +147,21 @@ def create_csp_problem():
     # Cada tipo de restrição precisa de conjuntos específicos de variáveis
     # Variáveis físicas (excluindo online) para restrições de unicidade de sala
     physical_vars = [v for v in all_variables 
-                    if not any('Online' in val[1] for val in get_domain(v[0], v[1]))]
+                    if not any('Online' in val[1] for val in get_domain(v[0], v[1], dataset))]
     
     # Variáveis por professor para restrições de conflito de professores
     teacher_vars = {}
-    for teacher in teachers:
-        teacher_vars[teacher] = [(course, lesson) for course in dsd[teacher] for lesson in [1, 2]]
+    for teacher in dataset['teachers']:
+        teacher_vars[teacher] = [(course, lesson) for course in dataset['dsd'][teacher] for lesson in [1, 2]]
     
     # Variáveis por turma para restrições de conflito de turmas e limites diários
     class_vars = {}
-    for class_name in classes:
-        class_vars[class_name] = [(course, lesson) for course in cc[class_name] for lesson in [1, 2]]
+    for class_name in dataset['classes']:
+        class_vars[class_name] = [(course, lesson) for course in dataset['cc'][class_name] for lesson in [1, 2]]
     
     # Variáveis online para restrições de coordenação e limites online
-    online_vars = [(course, lesson) for course in courses for lesson in [1, 2]
-                   if course in oc and oc[course] == lesson]
+    online_vars = [(course, lesson) for course in dataset['courses'] for lesson in [1, 2]
+                   if course in dataset['oc'] and dataset['oc'][course] == lesson]
     
     variables_info = {
         'all_variables': all_variables,
