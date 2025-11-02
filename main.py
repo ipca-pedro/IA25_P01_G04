@@ -20,8 +20,7 @@ import time
 import sys
 from csp_formulation import create_csp_problem
 from csp_constraints import apply_hard_constraints
-from csp_evaluation import evaluate_solution, display_schedule
-from csp_solver import find_solution
+from csp_evaluation import evaluate_solution
 from dataset_loader import load_dataset_from_file, list_available_datasets
 
 
@@ -48,14 +47,54 @@ def select_dataset():
         print("[ERRO] Por favor insira um número válido")
         return None
 
+def find_initial_solution(problem):
+    """Encontra primeira solução válida rapidamente"""
+    from constraint import MinConflictsSolver, BacktrackingSolver
+    problem.setSolver(MinConflictsSolver())
+    solution = problem.getSolution()
+    if not solution:
+        problem.setSolver(BacktrackingSolver())
+        solution = problem.getSolution()
+    return solution
+
+def timed_optimization(problem, initial_solution, dataset, time_limit=60):
+    """Procura melhor solução durante time_limit segundos"""
+    from constraint import MinConflictsSolver
+    best_solution = initial_solution
+    best_score = evaluate_solution(initial_solution, dataset)
+    
+    start_time = time.time()
+    iterations = 0
+    
+    print(f"[INFO] Iniciando otimização por {time_limit}s (pontuação inicial: {best_score})")
+    
+    while time.time() - start_time < time_limit:
+        problem.setSolver(MinConflictsSolver())
+        solution = problem.getSolution()
+        
+        if solution:
+            score = evaluate_solution(solution, dataset)
+            if score > best_score:
+                best_solution = solution
+                best_score = score
+                print(f"[MELHORIA] Nova melhor pontuação: {best_score} (iteração {iterations})")
+        
+        iterations += 1
+        
+        if iterations % 100 == 0:
+            time.sleep(0.001)
+    
+    elapsed = time.time() - start_time
+    print(f"[FINAL] Melhor pontuação: {best_score} após {iterations} iterações em {elapsed:.1f}s")
+    
+    return best_solution, best_score
+
 def main(dataset_path=None):
     """
-    Função principal que orquestra todo o processo de agendamento CSP.
-    
-    Args:
-        dataset_path: Caminho para o dataset (opcional, se None pede ao utilizador)
+    Função principal com busca em duas fases:
+    1. Encontra solução válida (hard constraints) e gera Excel
+    2. Procura melhor pontuação durante 1 minuto
     """
-    # Seleção do dataset
     if dataset_path is None:
         dataset_path = select_dataset()
         if dataset_path is None:
@@ -64,35 +103,39 @@ def main(dataset_path=None):
     print(f"\n[INFO] Carregando dataset: {dataset_path}")
     
     try:
-        # Carrega dataset dinâmico
         dataset = load_dataset_from_file(dataset_path)
-        
-        # Execução das fases CSP
         problem, variables_info = create_csp_problem(dataset)
         apply_hard_constraints(problem, variables_info, dataset)
-        solution, solve_time = find_solution(problem)
         
-        if solution:
-            score = evaluate_solution(solution, dataset)
-            display_schedule(solution, score, solve_time, dataset)
-            
-            # Busca otimizada com controlo de qualidade
-            print("\n[INFO] Iniciando busca otimizada...")
-            from csp_solver import find_optimal_solution
-            
-            # Cria novo problema para busca otimizada
-            problem_opt, _ = create_csp_problem(dataset)
-            apply_hard_constraints(problem_opt, variables_info, dataset)
-            
-            optimal_solution, optimal_time = find_optimal_solution(problem_opt, dataset)
-            
-            if optimal_solution:
-                optimal_score = evaluate_solution(optimal_solution, dataset)
-                print(f"[RESULT] Melhor solução: {optimal_score} pts em {optimal_time:.3f}s")
-            else:
-                print("[FALHA] Nenhuma solução ótima encontrada")
+        # FASE 1: Encontra solução inicial
+        print("[FASE 1] Procurando solução inicial...")
+        start_time = time.time()
+        initial_solution = find_initial_solution(problem)
+        initial_time = time.time() - start_time
+        
+        if not initial_solution:
+            print("[ERRO] Nenhuma solução encontrada")
+            return
+        
+        initial_score = evaluate_solution(initial_solution, dataset)
+        print(f"[OK] Solução inicial encontrada em {initial_time:.3f}s (pontuação: {initial_score})")
+        
+        # Gera Excel da solução inicial
+        from excel_export import export_to_excel
+        excel_file = f"horario_inicial_{int(time.time())}.xlsx"
+        export_to_excel(initial_solution, dataset, excel_file)
+        
+        # FASE 2: Otimização por 1 minuto
+        print("\n[FASE 2] Otimizando por 1 minuto...")
+        best_solution, best_score = timed_optimization(problem, initial_solution, dataset, 60)
+        
+        # Gera Excel da melhor solução se melhorou
+        if best_score > initial_score:
+            excel_file_best = f"horario_otimizado_{int(time.time())}.xlsx"
+            export_to_excel(best_solution, dataset, excel_file_best)
+            print(f"[OK] Melhor solução exportada para: {excel_file_best}")
         else:
-            print("[FALHA] Nenhuma solução encontrada")
+            print("[INFO] Solução inicial já era ótima")
             
     except Exception as e:
         print(f"[ERRO] Falha ao processar dataset: {e}")

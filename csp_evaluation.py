@@ -35,7 +35,7 @@ def evaluate_solution(solution, dataset):
     score += _evaluate_course_distribution(solution, dataset)
     score += _evaluate_class_distribution(solution, dataset)
     score += _evaluate_room_usage(solution, dataset)
-    # score += _evaluate_consecutive_lessons(solution, dataset)  # Agora é hard constraint
+    score += _evaluate_consecutive_lessons(solution, dataset)
     return score
 
 
@@ -134,8 +134,8 @@ def _evaluate_consecutive_lessons(solution, dataset):
     Returns:
         int: Pontuação parcial (0+)
     """
-    # Removido - consecutividade agora é hard constraint
-    return 0
+    return sum(_check_class_consecutiveness(solution, class_name, dataset)
+              for class_name in dataset['classes'])
 
 
 def _check_class_consecutiveness(solution, class_name, dataset):
