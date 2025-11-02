@@ -126,8 +126,8 @@ def main(dataset_path=None):
         export_to_excel(initial_solution, dataset, excel_file)
         
         # FASE 2: Otimização por 1 minuto
-        print("\n[FASE 2] Otimizando por 1 minuto...")
-        best_solution, best_score = timed_optimization(problem, initial_solution, dataset, 60)
+        print("\n[FASE 2] Otimizando por 4 minutos...")
+        best_solution, best_score = timed_optimization(problem, initial_solution, dataset, 240)
         
         # Gera Excel da melhor solução se melhorou
         if best_score > initial_score:
