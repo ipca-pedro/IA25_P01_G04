@@ -53,7 +53,7 @@ Performance alcançada através de quatro otimizações fundamentais:
   - Restringe domínio para laboratórios específicos
 - **Resultado:** Redução ~50% do espaço de busca inicial
 
-### 2. Heurística MRV (Most Restrictive Variable)
+### 2. Heurística MRV (Minimum Remaining Values)
 - **Localização:** `csp_formulation.py` (função `create_csp_problem`)
 - **Método:** Ordenação estratégica de variáveis (Fail-First)
 - **Implementação:** Variáveis com domínios menores processadas primeiro
@@ -97,10 +97,6 @@ Performance alcançada através de quatro otimizações fundamentais:
 
 ### Instalação
 
-```bash
-# Clonar repositório
-git clone https://github.com/ipca-pedro/ia25_p01_g04.git
-cd IA25_P01_G04
 
 # Instalar dependências
 pip install -r requirements.txt
