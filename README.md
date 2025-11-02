@@ -1,119 +1,133 @@
-# Agente de Alocação de Horários (CSP) – Grupo 04
+# Sistema Inteligente de Agendamento Académico (CSP)
 
-Este repositório contém o projeto de **Inteligência Artificial (2025/26)** do **IPCA**, centrado na resolução do problema de **Alocação de Horários (Timetabling)** através de um **Agente Inteligente** baseado em **Constraint Satisfaction Problems (CSP)**.  
+**Disciplina:** Inteligência Artificial (2025/26)  
+**Instituição:** IPCA - Instituto Politécnico do Cávado e do Ave  
+**Curso:** Engenharia de Sistemas Informáticos
 
-O principal entregável é o ficheiro `relatorio.ipynb`, que integra a documentação técnica completa e o código executável, conforme os requisitos do projeto.
+## Grupo 04
 
----
+- Ricardo Marques (25447)
+- Vitor Leite (25446)
+- Pedro Vilas Boas (25453)
+- Filipe Ferreira (25275)
+- Danilo Castro (25457)
 
-## 1. Resumo Técnico
+## Resumo do Projeto
 
-O problema consiste em agendar **30 lições** (15 UCs × 2) dentro de um domínio aproximado de **80 combinações possíveis** (20 slots × 4 salas).  
-Uma abordagem de força bruta implicaria um espaço de busca na ordem de **10⁵⁷ combinações**, sendo, portanto, **computacionalmente intratável**.
+Este projeto implementa um sistema inteligente para resolver o problema de **Alocação de Horários (Timetabling)**, utilizando uma abordagem baseada em **Constraint Satisfaction Problems (CSP)**.
 
-O projeto implementa um **pipeline de otimização baseado em IA**, capaz de resolver o problema em **menos de 0,05 segundos**, através da aplicação hierárquica de técnicas de CSP que reduzem significativamente o espaço de busca.
+O objetivo é automatizar a criação de horários académicos, respeitando restrições obrigatórias (Hard Constraints) e otimizando preferências desejáveis (Soft Constraints).
 
----
+**Entregável principal:** `relatorio.ipynb` - Notebook que consolida análise técnica, documentação e código executável.
 
-## 2. Técnicas de IA e CSP Implementadas
+## Desafio Computacional
 
-O desempenho do agente resulta da combinação de várias otimizações estruturadas:
+O problema de agendamento de horários é um desafio clássico de otimização combinatória. Uma formulação ingénua é computacionalmente intratável:
 
-### 2.1 Consistência de Nó (Pré-processamento)
-A função `get_domain()` filtra o domínio de cada variável antes da resolução, eliminando valores que violam restrições unárias (ex.: disponibilidade do professor, requisitos de sala).  
-Esta etapa reduz o espaço de busca inicial em cerca de **50%**.
+- **Variáveis:** 30 lições (15 UCs × 2 lições cada)
+- **Domínio base:** ~80 combinações (slot, sala) por lição
+- **Espaço de busca:** ~80^30 ≈ 10^57 combinações possíveis
 
-### 2.2 Consistência de Arco (Decomposição Binária)
-As restrições n-árias, como “nenhuma das 30 aulas pode ocorrer no mesmo slot/sala”, são decompostas em **restrições binárias pairwise**, reduzindo a complexidade de **O(n!)** para **O(n²)**.  
-Isto permite a aplicação eficiente da **Consistência de Arco** e a propagação automática das restrições pelo solver.
+Este espaço de busca astronómico exige otimizações de IA para encontrar soluções válidas em tempo útil.
 
-### 2.3 Heurística de Ordenação (MRV – Most Restrictive Variable)
-A heurística **Fail-First (MRV)** seleciona primeiro as variáveis com menor domínio (ex.: aulas com requisitos de laboratório ou online).  
-Desta forma, o solver resolve as partes mais restritivas no início, reduzindo significativamente o número de retrocessos (*backtracking*).
+## Solução: Pipeline de Otimização CSP
 
-### 2.4 Solver Hierárquico e Otimização de Qualidade
-O agente opera em duas fases distintas:
+Sistema modular que aplica técnicas de IA para decompor, restringir e resolver o problema eficientemente. Opera em processo de duas fases:
 
-- **Fase 1 – Solução Válida:**  
-  Aplica um solver híbrido: tenta o `MinConflictsSolver` (busca local rápida) e, caso necessário, recorre ao `BacktrackingSolver` (busca completa), garantindo 100% de sucesso e elevada velocidade.
+### Fase 1: Solução Válida
+Utiliza solver hierárquico para encontrar rapidamente qualquer solução que satisfaça todas as Hard Constraints. Garante solução funcional em <1 segundo.
 
-- **Fase 2 – Otimização da Solução:**  
-  Um ciclo de otimização cronometrado (`timed_optimization`) melhora a qualidade da solução, maximizando as **restrições soft** (ex.: distribuição equilibrada de dias e aulas consecutivas).
+### Fase 2: Otimização de Qualidade
+Após encontrar solução válida, executa ciclo de otimização durante 60 segundos usando busca local (MinConflictsSolver) para maximizar pontuação das Soft Constraints.
 
----
+## Técnicas de IA Implementadas
 
-## 3. Funcionalidades Principais
+Performance alcançada através de quatro otimizações fundamentais:
 
-- **Parser de Dataset Dinâmico:** Carrega automaticamente ficheiros `.txt` com professores, UCs e restrições.  
-- **Avaliação Multi-Critério:** Atribui pontuação às soluções com base em quatro critérios de qualidade (restrições soft).  
-- **Exportação Automática:** Gera relatórios `.xlsx` com visualização semanal, cores por turma e formatação de grelha.
+### 1. Consistência de Nó
+- **Localização:** `csp_formulation.py` (função `get_domain`)
+- **Método:** Filtragem preventiva de domínios antes da busca
+- **Aplicações:**
+  - Filtra slots indisponíveis de professores
+  - Restringe domínio para aulas online
+  - Restringe domínio para laboratórios específicos
+- **Resultado:** Redução ~50% do espaço de busca inicial
 
----
+### 2. Heurística MRV (Most Restrictive Variable)
+- **Localização:** `csp_formulation.py` (função `create_csp_problem`)
+- **Método:** Ordenação estratégica de variáveis (Fail-First)
+- **Implementação:** Variáveis com domínios menores processadas primeiro
+- **Resultado:** Redução drástica de backtracking
 
-## 4. Execução do Projeto
+### 3. Decomposição Pairwise
+- **Localização:** `csp_constraints.py`
+- **Método:** Transformação de restrições N-árias em binárias
+- **Complexidade:** O(n!) → O(n²)
+- **Funções principais:**
+  - `no_room_conflict`: Garante unicidade de (slot, sala)
+  - `different_slots`: Evita conflitos de professores/turmas
+- **Resultado:** Propagação eficiente de restrições
+
+### 4. Solver Hierárquico
+- **Localização:** Integrado no `main.py`
+- **Estratégia:** Combinação de dois algoritmos
+  - **Tentativa 1:** MinConflictsSolver (busca local rápida)
+  - **Tentativa 2:** BacktrackingSolver (busca completa)
+- **Resultado:** Velocidade + garantia de completude
+
+## Arquitetura do Sistema
+
+| Módulo | Responsabilidade |
+|--------|------------------|
+| `relatorio.ipynb` | **ENTREGÁVEL PRINCIPAL** - Documentação e código executável |
+| `main.py` | Orquestrador principal (pipeline 2 fases) |
+| `dataset_loader.py` | Parser dinâmico de ficheiros de dados |
+| `csp_formulation.py` | Definição de variáveis, domínios, MRV |
+| `csp_constraints.py` | Restrições Hard e decomposição Pairwise |
+| `csp_evaluation.py` | Sistema de pontuação (Soft Constraints) |
+| `excel_export.py` | Geração de relatórios Excel formatados |
+| `requirements.txt` | Dependências Python |
+| `material/` | Datasets (dataset.txt, dataset2.txt) |
+
+## Execução
 
 ### Requisitos
+- Python 3.10+
+- Bibliotecas: `python-constraint`, `pandas`, `openpyxl`, `jupyter`
 
-- Python 3.10 ou superior  
-- Bibliotecas:  
-  `python-constraint`, `pandas`, `openpyxl`, `jupyter`
+### Instalação
 
-### Passos de Execução
+```bash
+# Clonar repositório
+git clone https://github.com/ipca-pedro/ia25_p01_g04.git
+cd IA25_P01_G04
 
-1. **Clonar o repositório:**
-   ```bash
-   git clone <url-do-repositorio>
-   cd IA25_P01_G04
-   ```
-
-2. **Instalar as dependências:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Abrir o relatório notebook:**
-   ```bash
-   code relatorio.ipynb
-   # ou
-   jupyter lab
-   ```
-
-4. **Executar todas as células do notebook:**
-   O bloco final (“Execução do Agente”) executa automaticamente o pipeline:
-   1. Carregamento do dataset  
-   2. Formulação do problema (Consistência de Nó + MRV)  
-   3. Aplicação de restrições (Consistência de Arco)  
-   4. Resolução hierárquica (Fase 1 e Fase 2)  
-   5. Geração do ficheiro Excel `horario_otimizado_...xlsx`
-
----
-
-## 5. Estrutura do Repositório
-
-```
-IA25_P01_G04/
-│
-├── relatorio.ipynb           # [ENTREGÁVEL PRINCIPAL] Relatório técnico e executável
-├── main.py                   # Ponto de entrada com o pipeline de duas fases
-├── requirements.txt           # Lista de dependências
-│
-├── csp_formulation.py        # Definição de variáveis, domínios, consistência de nó e MRV
-├── csp_constraints.py        # Restrições hard e decomposição pairwise (consistência de arco)
-├── csp_solver.py             # Implementação do solver hierárquico
-├── csp_evaluation.py         # Avaliação e pontuação de restrições soft
-│
-├── dataset_loader.py         # Parser de ficheiros .txt
-├── excel_export.py           # Exportação e formatação do ficheiro .xlsx
-│
-└── material/
-    ├── dataset.txt
-    └── dataset2.txt
+# Instalar dependências
+pip install -r requirements.txt
 ```
 
----
+### Execução Recomendada
 
-## 6. Créditos
+Abrir `relatorio.ipynb` num editor compatível (Jupyter Lab, VS Code) e executar todas as células. O notebook guia através de toda a análise e executa o pipeline completo.
 
-**Instituto Politécnico do Cávado e do Ave (IPCA)**  
-Unidade Curricular: Inteligência Artificial (2025/26)  
-Projeto desenvolvido por: **Grupo 04**
+### Execução Alternativa
+
+```bash
+python main.py
+```
+
+O script solicita seleção de dataset e executa pipeline de duas fases.
+
+### Resultados
+
+Após execução, são gerados:
+- `Horario_Academico_Inicial.xlsx` - Primeira solução válida
+- `Horario_Academico_Otimizado.xlsx` - Melhor solução após otimização
+
+## Resultados Alcançados
+
+- **Performance:** Soluções em <0.05 segundos
+- **Qualidade:** Sistema multi-critério (50-200 pontos)
+- **Redução de complexidade:** ~10^21x menor espaço de busca
+- **Taxa de sucesso:** 100% (sempre encontra solução válida)
+- **Exportação:** Relatórios Excel profissionais
