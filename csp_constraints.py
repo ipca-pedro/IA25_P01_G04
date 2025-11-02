@@ -105,6 +105,31 @@ def max_online_per_day(*assignments):
     return True
 
 
+def consecutive_lessons_constraint(*assignments):
+    """
+    Restrição hard de consecutividade: aulas no mesmo dia devem ser consecutivas.
+    """
+    # Agrupa slots por dia
+    slots_by_day = {}
+    for slot, room in assignments:
+        day = get_day(slot)
+        slots_by_day.setdefault(day, []).append(slot)
+    
+    # Verifica consecutividade em cada dia
+    for day_slots in slots_by_day.values():
+        if len(day_slots) > 1:
+            day_slots.sort()
+            # Converte para slots dentro do dia (1-4)
+            day_slots_normalized = [((slot - 1) % 4) + 1 for slot in day_slots]
+            day_slots_normalized.sort()
+            
+            # Verifica se são consecutivos
+            for i in range(1, len(day_slots_normalized)):
+                if day_slots_normalized[i] - day_slots_normalized[i-1] != 1:
+                    return False  # Não consecutivos
+    return True
+
+
 def apply_hard_constraints(problem, variables_info, dataset):
     """
     Aplica todas as restrições hard obrigatórias ao problema CSP.
@@ -155,3 +180,8 @@ def apply_hard_constraints(problem, variables_info, dataset):
     # RESTRIÇÃO 6: Limite de aulas online por dia
     if online_vars:
         problem.addConstraint(max_online_per_day, online_vars)
+    
+    # RESTRIÇÃO 7: Consecutividade obrigatória por turma
+    for class_name in dataset['classes']:
+        class_variables = class_vars[class_name]
+        problem.addConstraint(consecutive_lessons_constraint, class_variables)
