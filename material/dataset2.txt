@@ -8,8 +8,8 @@
 #cc — courses assigned to classes (class, courses*)
 LESI       PDM ISI IA SETR PA
 LEEC       PS IM R IE RCSD
-LEIM       GSI IA RCE AST ISC GUS
-LDJG       IAAJ PVR TCGEV PAG
+LEIM       GSI IA RCE AST ISC 
+LDJG       IAAJ PVR TCGEV PAG GUS
 
 #olw — courses with just one lesson per week
 
