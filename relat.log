@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.5.18)  26 OCT 2025 16:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.5.18)  2 NOV 2025 17:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./relatorio_final.tex
-(relatorio_final.tex
+**./relat.tex
+(relat.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (C:\Program Files\MiKTeX\tex/latex/base\article.cls
@@ -360,48 +360,67 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip53
 )
+(C:\Program Files\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen169
+\lightrulewidth=\dimen170
+\cmidrulewidth=\dimen171
+\belowrulesep=\dimen172
+\belowbottomsep=\dimen173
+\aboverulesep=\dimen174
+\abovetopsep=\dimen175
+\cmidrulesep=\dimen176
+\cmidrulekern=\dimen177
+\defaultaddspace=\dimen178
+\@cmidla=\count298
+\@cmidlb=\count299
+\@aboverulesep=\dimen179
+\@belowrulesep=\dimen180
+\@thisruleclass=\count300
+\@lastruleclass=\count301
+\@thisrulewidth=\dimen181
+)
 (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count298
+\l__color_backend_stack_int=\count302
 \l__pdf_internal_box=\box55
-)
-(relatorio_final.aux)
-\openout1 = `relatorio_final.aux'.
+) (relat.aux)
+\openout1 = `relat.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count299
-\scratchdimen=\dimen169
+\scratchcounter=\count303
+\scratchdimen=\dimen182
 \scratchbox=\box56
-\nofMPsegments=\count300
-\nofMParguments=\count301
+\nofMPsegments=\count304
+\nofMParguments=\count305
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count302
-\MPscratchDim=\dimen170
-\MPnumerator=\count303
-\makeMPintoPDFobject=\count304
+\MPscratchCnt=\count306
+\MPscratchDim=\dimen183
+\MPnumerator=\count307
+\makeMPintoPDFobject=\count308
 \everyMPtoPDFconversion=\toks28
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -411,7 +430,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-\c@lstlisting=\count305
+\c@lstlisting=\count309
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -447,18 +466,17 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 41.
-(relatorio_final.out) (relatorio_final.out)
+Package hyperref Info: Link coloring OFF on input line 48.
+(relat.out) (relat.out)
 \@outlinefile=\write3
-\openout3 = `relatorio_final.out'.
+\openout3 = `relat.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 51.
 
-
-(C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
+ (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -466,79 +484,336 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/Utilizador/AppData/Roaming/MiKTeX/data/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (160.13799pt too wide) in paragraph at lines 69--70
-[]\OT1/cmr/m/n/12 onde $[] = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 UC\OT1/cmr/m/n/
-12 11\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 12\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/1
-2 13\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 14\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12
- 15\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 21\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 
-22\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 23\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 2
-4\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 25\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 31
-\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 32\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 33\
-OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 34\OML/cmm/m/it/12 ; UC\OT1/cmr/m/n/12 35\O
-MS/cmsy/m/n/12 g$
- []
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 84.
 
-[2]
-Overfull \hbox (59.65001pt too wide) in paragraph at lines 130--131
-[]\OT1/cmr/bx/n/12 Problema das Res-tri^^Xc~oes Glo-bais: \OT1/cmr/m/n/12 O uso
- de res-tri^^Xc~oes glo-bais como \OT1/cmtt/m/n/12 AllDifferentConstraint
- []
 
-[3] [4]
-
-! LaTeX Error: Unicode character ≈ (U+2248)
-               not set up for use with LaTeX.
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.210 ... teórico:} 150 + 60 - 12 + variável ≈
-                                                   200+ pontos
+l.86     # ... código 
+                       de filtragem de slots e salas específicas ...
 ? 
 
-Overfull \hbox (11.48299pt too wide) in paragraph at lines 230--231
+! LaTeX Error: Invalid UTF-8 byte "B3.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86     # ... código 
+                       de filtragem de slots e salas específicas ...
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 ...e filtragem de slots e salas específicas 
+                                                  ...
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "AD.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 ...e filtragem de slots e salas específicas 
+                                                  ...
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88     # Heurística 
+                       de preferências de salas por turma
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "AD.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88     # Heurística 
+                       de preferências de salas por turma
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88     # Heurística de preferências 
+                                        de salas por turma
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "AA.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88     # Heurística de preferências 
+                                        de salas por turma
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...d_rooms = ['RoomA', 'RoomB']  # Redução 
+                                                  de 4 para 2 salas
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "A7.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...d_rooms = ['RoomA', 'RoomB']  # Redução 
+                                                  de 4 para 2 salas
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...d_rooms = ['RoomA', 'RoomB']  # Redução 
+                                                  de 4 para 2 salas
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "A3.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...d_rooms = ['RoomA', 'RoomB']  # Redução 
+                                                  de 4 para 2 salas
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.93 ...APENAS as salas preferenciais ao domínio 
+                                                  otimizado
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "AD.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.93 ...APENAS as salas preferenciais ao domínio 
+                                                  otimizado
+? 
+[2]
+Overfull \hbox (5.43652pt too wide) in paragraph at lines 103--104
+[]\OT1/cmr/bx/n/12 Decis~ao: \OT1/cmr/m/n/12 O uso de res-tri^^Xc~oes glo-bais 
+como \OT1/cmtt/m/n/12 AllDifferentConstraint \OT1/cmr/m/n/12 so-bre 30 vari^^Sa
+veis
+ []
+
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113     # RESTRIÇÃO 
+                        1: Unicidade de (slot, sala) - DECOMPOSIÇÃO PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "87.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113     # RESTRIÇÃO 
+                        1: Unicidade de (slot, sala) - DECOMPOSIÇÃO PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113     # RESTRIÇÃO 
+                        1: Unicidade de (slot, sala) - DECOMPOSIÇÃO PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "83.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113     # RESTRIÇÃO 
+                        1: Unicidade de (slot, sala) - DECOMPOSIÇÃO PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...icidade de (slot, sala) - DECOMPOSIÇÃO 
+                                                  PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "87.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...icidade de (slot, sala) - DECOMPOSIÇÃO 
+                                                  PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...icidade de (slot, sala) - DECOMPOSIÇÃO 
+                                                  PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "83.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...icidade de (slot, sala) - DECOMPOSIÇÃO 
+                                                  PAIRWISE
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114     # Permite a aplicação 
+                                  da Consistência de Arco.
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "A7.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114     # Permite a aplicação 
+                                  da Consistência de Arco.
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114     # Permite a aplicação 
+                                  da Consistência de Arco.
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "A3.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114     # Permite a aplicação 
+                                  da Consistência de Arco.
+? 
+
+! LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114 ...# Permite a aplicação da Consistência 
+                                                  de Arco.
+? 
+
+! LaTeX Error: Invalid UTF-8 byte "AA.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114 ...# Permite a aplicação da Consistência 
+                                                  de Arco.
+? 
+[3]
+Overfull \hbox (11.48299pt too wide) in paragraph at lines 165--166
 \OT1/cmr/m/n/12 As oti-miza^^Xc~oes im-ple-men-ta-das trans-for-ma-ram um pro-b
-lema in-trat^^Savel numa solu^^Xc~ao pr^^Satica: 
+lema in-trat^^Savel numa solu^^Xc~ao pr^^Satica,
  []
 
-[5]
-Overfull \hbox (8.76678pt too wide) in paragraph at lines 248--249
-[]\OT1/cmr/m/n/12 A ar-qui-te-tura mo-du-lar de-sen-vol-vida (\OT1/cmtt/m/n/12 
-csp[]formulation\OT1/cmr/m/n/12 , \OT1/cmtt/m/n/12 csp[]constraints\OT1/cmr/m/n
-/12 , \OT1/cmtt/m/n/12 csp[]solver\OT1/cmr/m/n/12 ,
- []
-
-[6] (relatorio_final.aux)
+[4] (relat.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
-Package rerunfilecheck Info: File `relatorio_final.out' has not changed.
-(rerunfilecheck)             Checksum: 29DAEA9B3373D97CE345E36C33D9615A;3528.
+Package rerunfilecheck Info: File `relat.out' has not changed.
+(rerunfilecheck)             Checksum: 637AC15B4A424F6166ED7B3740998B7D;2790.
  ) 
 Here is how much of TeX's memory you used:
- 13094 strings out of 474486
- 200094 string characters out of 5753534
- 1938542 words of memory out of 5000000
- 35180 multiletter control sequences out of 15000+600000
- 567679 words of font info for 73 fonts, out of 8000000 for 9000
+ 13617 strings out of 474486
+ 205243 string characters out of 5753534
+ 2028542 words of memory out of 5000000
+ 35678 multiletter control sequences out of 15000+600000
+ 569530 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,456b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,7n,79p,935b,2058s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Utilizador\AppData\Roaming\MiKTeX\data\fonts/pk/ljfour/jknappen/ec
-/dpi600\tcbx1200.pk> <C:\Users\Utilizador\AppData\Roaming\MiKTeX\data\fonts/pk/
-ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Program Files/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program
- Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/
-public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.
-pfb>
-Output written on relatorio_final.pdf (6 pages, 148653 bytes).
+/dpi600\tcrm1200.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmb
+x10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/
+Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program File
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Program Files/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pf
+b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
+ Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Progr
+am Files/MiKTeX/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
+Output written on relat.pdf (4 pages, 225632 bytes).
 PDF statistics:
- 185 PDF objects out of 1000 (max. 8388607)
- 40 named destinations out of 1000 (max. 500000)
- 145 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 211 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 500000)
+ 97 words of extra memory for PDF output out of 10000 (max. 10000000)
 
