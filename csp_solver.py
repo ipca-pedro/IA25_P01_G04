@@ -64,3 +64,52 @@ def find_solution(problem):
         # Tratamento de erros inesperados durante a resolução
         solve_time = time.time() - start_time
         return None, solve_time
+
+
+def find_optimal_solution(problem, dataset):
+    """
+    Busca obrigatória por solução >= 240 pts, depois procura ótima >= 336 pts
+    """
+    from csp_evaluation import evaluate_solution
+    from excel_export import export_to_excel
+    
+    start_time = time.time()
+    problem.setSolver(BacktrackingSolver())
+    
+    best_solution = None
+    best_score = 0
+    min_240_exported = False
+    
+    try:
+        for solution in problem.getSolutionIter():
+            score = evaluate_solution(solution, dataset)
+            
+            if score > best_score:
+                best_solution = solution
+                best_score = score
+            
+            # OBRIGATÓRIO: Continua até encontrar >= 240 e exportar
+            if not min_240_exported and score >= 240:
+                export_to_excel(solution, dataset, "horario_qualidade_minima_240.xlsx")
+                print(f"[EXPORT] Qualidade mínima atingida: {score} pts")
+                min_240_exported = True
+                # Continua procura pela ótima
+            
+            # Solução ótima >= 336 - termina
+            if score >= 336:
+                export_to_excel(solution, dataset, "horario_soft_constraints_maximo_336.xlsx")
+                print(f"[OPTIMAL] Solução ótima encontrada: {score} pts")
+                solve_time = time.time() - start_time
+                return solution, solve_time
+    
+    except KeyboardInterrupt:
+        pass
+    
+    solve_time = time.time() - start_time
+    
+    # Se terminou sem encontrar >= 240, força exportação da melhor
+    if not min_240_exported and best_solution:
+        export_to_excel(best_solution, dataset, "horario_melhor_encontrada.xlsx")
+        print(f"[EXPORT] Melhor solução encontrada: {best_score} pts")
+    
+    return best_solution, solve_time

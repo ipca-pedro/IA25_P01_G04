@@ -76,10 +76,21 @@ def main(dataset_path=None):
             score = evaluate_solution(solution, dataset)
             display_schedule(solution, score, solve_time, dataset)
             
-            # Exporta para Excel
-            from excel_export import export_to_excel
-            excel_file = f"horario_{dataset_path.replace('/', '_').replace('\\', '_').replace('.txt', '')}.xlsx"
-            export_to_excel(solution, dataset, excel_file)
+            # Busca otimizada com controlo de qualidade
+            print("\n[INFO] Iniciando busca otimizada...")
+            from csp_solver import find_optimal_solution
+            
+            # Cria novo problema para busca otimizada
+            problem_opt, _ = create_csp_problem(dataset)
+            apply_hard_constraints(problem_opt, variables_info, dataset)
+            
+            optimal_solution, optimal_time = find_optimal_solution(problem_opt, dataset)
+            
+            if optimal_solution:
+                optimal_score = evaluate_solution(optimal_solution, dataset)
+                print(f"[RESULT] Melhor solução: {optimal_score} pts em {optimal_time:.3f}s")
+            else:
+                print("[FALHA] Nenhuma solução ótima encontrada")
         else:
             print("[FALHA] Nenhuma solução encontrada")
             
