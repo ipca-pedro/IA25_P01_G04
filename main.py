@@ -122,7 +122,7 @@ def main(dataset_path=None):
         
         # Gera Excel da solução inicial
         from excel_export import export_to_excel
-        excel_file = f"horario_inicial_{int(time.time())}.xlsx"
+        excel_file = "Horario_Academico_Inicial.xlsx"
         export_to_excel(initial_solution, dataset, excel_file)
         
         # FASE 2: Otimização por 1 minuto
@@ -131,7 +131,7 @@ def main(dataset_path=None):
         
         # Gera Excel da melhor solução se melhorou
         if best_score > initial_score:
-            excel_file_best = f"horario_otimizado_{int(time.time())}.xlsx"
+            excel_file_best = "Horario_Academico_Otimizado.xlsx"
             export_to_excel(best_solution, dataset, excel_file_best)
             print(f"[OK] Melhor solução exportada para: {excel_file_best}")
         else:
