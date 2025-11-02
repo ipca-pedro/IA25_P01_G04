@@ -114,13 +114,14 @@ def apply_hard_constraints(problem, variables_info, dataset):
         variables_info (dict): Dicionário com variáveis organizadas por tipo
     """
     # Extrai conjuntos de variáveis organizados por tipo
+    all_vars = variables_info['all_variables']       # Todas as variáveis
     physical_vars = variables_info['physical_vars']  # Variáveis físicas (não online)
     teacher_vars = variables_info['teacher_vars']    # Variáveis por professor
     class_vars = variables_info['class_vars']        # Variáveis por turma
     online_vars = variables_info['online_vars']      # Variáveis online
     
-    # RESTRIÇÃO 1: Unicidade de (slot, sala) - DECOMPOSIÇÃO PAIRWISE 
-    for var1, var2 in combinations(physical_vars, 2):
+    # RESTRIÇÃO 1: Unicidade global de (slot, sala) - TODAS as variáveis
+    for var1, var2 in combinations(all_vars, 2):
         problem.addConstraint(no_room_conflict, (var1, var2))
     
     # RESTRIÇÃO 2: Conflito de professores - DECOMPOSIÇÃO POR PROFESSOR

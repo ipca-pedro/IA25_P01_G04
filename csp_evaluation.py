@@ -73,14 +73,14 @@ def _evaluate_class_distribution(solution, dataset):
     CRITÉRIO 2: Distribuição semanal ideal por turma.
     
     OBJETIVO: Turmas com aulas em exatamente 4 dias
-    PONTUAÇÃO: +20 pontos por turma com aulas em exatamente 4 dias
-    MÁXIMO POSSÍVEL: 3 turmas × 20 pts = 60 pontos
+    PONTUAÇÃO: +50 pontos por turma com 4 dias, -10 por cada dia extra/falta
+    MÁXIMO POSSÍVEL: 3 turmas × 50 pts = 150 pontos
     
     Args:
         solution (dict): Solução CSP a avaliar
         
     Returns:
-        int: Pontuação parcial (0-60)
+        int: Pontuação parcial
     """
     score = 0
     # Verifica cada turma individualmente
@@ -88,9 +88,13 @@ def _evaluate_class_distribution(solution, dataset):
         # Calcula conjunto de dias utilizados pela turma
         days_used = {get_day(solution[(course, lesson)][0])
                     for course in dataset['cc'][class_name] for lesson in [1, 2]}
-        # Premia se a turma usa exatamente 4 dias (ideal)
-        if len(days_used) == 4:
-            score += 20  # +20 pontos por turma bem distribuída
+        
+        num_days = len(days_used)
+        if num_days == 4:
+            score += 50  # Prémio alto por 4 dias exatos
+        else:
+            # Penalização por desvio do ideal (4 dias)
+            score -= abs(4 - num_days) * 10
     return score
 
 
